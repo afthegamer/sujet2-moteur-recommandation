@@ -1,0 +1,19 @@
+item_id,nom,categorie,prix_eur
+1,Smartphone Aeris X12,Smartphones,699.0
+2,Smartphone Aeris Lite,Smartphones,349.0
+3,Smartphone Nova 5G,Smartphones,899.0
+4,Laptop UltraBook 14,Ordinateurs portables,1099.0
+5,Laptop ProBook 15,Ordinateurs portables,1399.0
+6,Laptop StudyBook 13,Ordinateurs portables,649.0
+7,Casque Audio SilentPro,Audio,199.0
+8,Ecouteurs SonicBuds,Audio,89.0
+9,Enceinte BassBox Mini,Audio,59.0
+10,Coque Protection Aeris X12,Accessoires,19.9
+11,Chargeur rapide USB-C 65W,Accessoires,29.9
+12,Batterie externe 20000mAh,Accessoires,39.9
+13,Montre connectee FitTrack,Objets connectes,149.0
+14,Bracelet connecte PulseBand,Objets connectes,49.0
+15,Manette Gaming ProPad,Gaming,69.0
+16,Casque Gaming ImmersiveX,Gaming,129.0
+17,Souris Gaming PrecisionM,Gaming,59.0
+18,Webcam StreamCam HD,Accessoires,79.0

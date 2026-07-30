@@ -1,0 +1,22 @@
+# Build SBT / Scala
+target/
+**/target/
+project/target/
+project/project/
+.scala-build/
+
+# Serveurs de langage / outils Scala
+.bsp/
+.bloop/
+.metals/
+metals.sbt
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Divers
+*.log
+.DS_Store
+Thumbs.db
