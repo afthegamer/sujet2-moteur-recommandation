@@ -3,18 +3,8 @@ package techmarket.orchestration
 import techmarket.calcul.{Scores, Similarite}
 import techmarket.modele.*
 
-/** Pipeline de recommandation : scoring, filtrage, tri, sélection du top-N.
-  *
-  * Entièrement pur : à catalogue identique, les recommandations produites sont
-  * identiques. Aucune lecture de fichier, aucun affichage.
-  */
 object MoteurRecommandation:
 
-  /** Recommandations pour un utilisateur.
-    *
-    * Renvoie `Left` si l'utilisateur est inconnu du catalogue — une erreur
-    * d'appel, à distinguer d'un utilisateur connu sans recommandation.
-    */
   def recommander(
       catalogue: Catalogue,
       userId: UserId,
@@ -27,16 +17,6 @@ object MoteurRecommandation:
         personnalisees(catalogue, utilisateur, topN)
           .getOrElse(populaires(catalogue, utilisateur, topN))
 
-  /** Filtrage collaboratif basé utilisateur.
-    *
-    * Renvoie `None` lorsque la personnalisation n'est pas possible : segment
-    * « nouveau », ou aucun voisin de goût exploitable. C'est ce `None` qui
-    * déclenche le repli sur la popularité.
-    *
-    * Le déclenchement se fait sur le *segment* et non sur un historique vide :
-    * dans le jeu de données TechMarket, tous les utilisateurs ont au moins deux
-    * interactions, donc un test sur l'historique vide ne se produirait jamais.
-    */
   private def personnalisees(
       catalogue: Catalogue,
       utilisateur: User,
@@ -56,11 +36,6 @@ object MoteurRecommandation:
 
       val dejaConnus = catalogue.itemsConnusDe(utilisateur.id)
 
-      /* Score d'un item : somme, sur les voisins qui s'y sont intéressés, de
-         leur similarité pondérée par l'intensité de leur intérêt. L'intensité
-         retenue est le signal le plus fort du voisin sur l'item (même règle que
-         dans le profil) : un voisin qui a vu, acheté ET noté un même produit
-         ne compte qu'une fois, pas trois. */
       val scoresParItem = voisins
         .flatMap: (voisin, similarite) =>
           Scores
@@ -91,9 +66,6 @@ object MoteurRecommandation:
 
       if resultats.isEmpty then None else Some(resultats)
 
-  /** Repli du cold start : les items les plus populaires du catalogue,
-    * hors produits déjà connus de l'utilisateur.
-    */
   private def populaires(
       catalogue: Catalogue,
       utilisateur: User,

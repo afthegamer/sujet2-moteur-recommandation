@@ -58,9 +58,9 @@ sbt test
 | Outil | Version |
 |---|---|
 | JDK | 21 |
-| SBT | 1.9.9 |
-| Scala | 3.3.1 |
+| SBT | 1.12.4 |
+| Scala | 3.8.1 |
 
 ## Organisation
 
-Projet réalisé individuellement. Développement incrémental en quatre étapes : cadrage et modélisation, cœur fonctionnel, intégration du pipeline, finalisation.
+Projet réalisé en équipe. Développement incrémental en quatre séances : cadrage et modélisation, cœur fonctionnel, intégration du pipeline, finalisation.
