@@ -4,7 +4,7 @@ Projet tutoré Scala — mini moteur de recommandation en programmation fonction
 
 ## Problématique reformulée
 
-TechMarket vend des produits high-tech en ligne. Son catalogue dépasse la centaine de références et s'agrandit chaque trimestre, si bien que **les visiteurs s'y perdent** : le taux de rebond sur les fiches produit est élevé, le panier moyen stagne, et un visiteur sans historique ne reçoit aucune suggestion.
+TechMarket vend des produits high-tech en ligne. Son catalogue compte plusieurs centaines de références et s'agrandit chaque trimestre, si bien que **les visiteurs s'y perdent** : le taux de rebond sur les fiches produit est élevé, le panier moyen stagne, et un visiteur sans historique ne reçoit aucune suggestion.
 
 L'équipe Data veut un **prototype** pour mesurer ce qu'apporterait une fonctionnalité « Vous pourriez aussi aimer », avant d'investir dans une solution industrielle.
 

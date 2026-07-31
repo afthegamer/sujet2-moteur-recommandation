@@ -1,7 +1,6 @@
 # Rapport de projet — Moteur de recommandation TechMarket
 
 Projet tutoré Scala — programmation fonctionnelle
-Dépôt : <https://github.com/afthegamer/sujet2-moteur-recommandation>
 
 ---
 
@@ -26,7 +25,7 @@ Voici comment chaque objectif se traduit dans notre code :
 
 Les trois contraintes sont respectées. Le moteur tourne hors-ligne sur les CSV
 fournis, sans aucun service externe. Il donne les mêmes résultats à chaque
-exécution. Et le code reste court : chaque couche tient dans un ou deux fichiers.
+exécution. Et le code reste court : neuf fichiers pour tout le programme.
 
 ## 2. Le jeu de données
 
@@ -123,12 +122,13 @@ du programme, pas une erreur.
 
 | Principe demandé | Où on le voit |
 |---|---|
-| Immutabilité | Que des `val` et des `case class`. Les méthodes `avecItem`, `avecUser`, `avecInteraction` renvoient un nouveau `Catalogue` au lieu de modifier l'ancien |
+| Immutabilité | Aucun `var` dans le projet : uniquement des `val` et des `case class`. Les méthodes `avecItem`, `avecUser`, `avecInteraction` renvoient un nouveau `Catalogue` au lieu de modifier l'ancien |
 | Fonctions pures | Tout `modele`, `calcul` et `orchestration` : mêmes entrées, mêmes sorties, aucun effet de bord |
 | Fonctions d'ordre supérieur | `map`, `filter`, `filterNot`, `flatMap`, `sortBy`, `take`, `groupMapReduce`, `partitionMap`. Aucun `var` ni `while` dans tout le projet |
 | ADT et pattern matching | `enum Segment` et `enum TypeInteraction`. `Note` porte sa valeur, donc une note sans valeur est impossible à écrire |
 | Erreurs sans exception | `Option` pour les recherches, `Either` pour le parsing et l'utilisateur inconnu, `Try` pour la lecture de fichier |
-| Cœur pur, bords impurs | `Main.scala` fait moins de 30 lignes : charger, appeler, afficher |
+| Cœur pur, bords impurs | `Main.scala` fait une trentaine de lignes : charger, appeler, afficher, exporter |
+| Récursivité plutôt que mutation | Aucun `while` ni `var` dans le projet. Les parcours passent par les combinateurs de collection, qui portent déjà la récursion : écrire nos propres fonctions récursives n'aurait rien apporté ici |
 
 Sur le dernier point, le chargement des CSV mérite un mot. Aucune exception ne
 remonte : si un fichier est illisible ou une ligne mal formée, on obtient un
@@ -218,10 +218,6 @@ similarité sans qu'aucun test échoue. On a donc ajouté un cas de contraste, u
 utilisateur « nouveau » qui *a* des voisins, et des vérifications sur les valeurs
 exactes des scores.
 
-**Les versions de Scala et sbt.** Le projet a démarré en Scala 3.3.1 avec sbt
-1.9.9, puis a été passé en 3.8.1 et 1.12.4. Il a fallu vérifier que tout
-compilait et que les tests passaient toujours après ce changement.
-
 **Le travail à plusieurs sur le même dépôt.** Le moteur a été ajouté par un
 membre pendant que d'autres travaillaient sur l'affichage. Il est arrivé sans
 tests, ce qui a été rattrapé ensuite. C'est ce qui nous a appris à regarder ce
@@ -229,15 +225,14 @@ qui est déjà poussé avant de pousser à notre tour.
 
 ## 8. L'organisation de l'équipe
 
-Quatre personnes ont travaillé sur le projet. La répartition se lit directement
-dans l'historique Git.
+Quatre personnes ont travaillé sur le projet.
 
-| Membre | Ce qu'il a fait | Commits |
-|---|---|---|
-| **Brad Dos Santos Patatas** | Séance 1 : structure sbt, prise en main des données, modèle du domaine, README de cadrage | `720a694`, `8a2f9c4` |
-| **Robin** | Séance 2 : le cœur fonctionnel — similarité cosinus, poids et profils, chargement des CSV, et les tests de ces trois modules | `f6f598b` |
-| **Mathis** | Séance 3 : le point d'entrée `Main` et la couche d'affichage, puis la mise à jour du README | `1bdad81`, `f8ec836`, `b3686b3`, `b87ad00` |
-| **diallosidymohamed** | Séance 3 : le moteur de recommandation, c'est-à-dire le pipeline complet | `43c1229` |
+| Membre | Ce qu'il a fait |
+|---|---|
+| **Brad Dos Santos Patatas** | Séance 1 : structure sbt, prise en main des données, modèle du domaine, README de cadrage. Séance 3 : tests du moteur et export JSON. Séance 4 : ce rapport |
+| **Robin** | Séance 2 : le cœur fonctionnel — similarité cosinus, poids et profils, chargement des CSV, et les tests de ces trois modules |
+| **Mathis** | Séance 3 : le point d'entrée `Main` et la couche d'affichage, puis la mise à jour du README |
+| **diallosidymohamed** | Séance 3 : le moteur de recommandation, c'est-à-dire le pipeline complet |
 
 **Les tests du moteur ont été écrits à deux, par Brad et Robin.** C'était le
 morceau le plus délicat à vérifier : il fallait construire un jeu d'essai dont
