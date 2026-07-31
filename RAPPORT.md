@@ -211,10 +211,17 @@ dans l'historique Git.
 
 | Membre | Ce qu'il a fait | Commits |
 |---|---|---|
-| **Brad Dos Santos Patatas** | Séance 1 : structure sbt, prise en main des données, modèle du domaine, README de cadrage. Puis les tests du moteur en séance 3 | `720a694`, `8a2f9c4` |
+| **Brad Dos Santos Patatas** | Séance 1 : structure sbt, prise en main des données, modèle du domaine, README de cadrage | `720a694`, `8a2f9c4` |
 | **Robin** | Séance 2 : le cœur fonctionnel — similarité cosinus, poids et profils, chargement des CSV, et les tests de ces trois modules | `f6f598b` |
 | **Mathis** | Séance 3 : le point d'entrée `Main` et la couche d'affichage, puis la mise à jour du README | `1bdad81`, `f8ec836`, `b3686b3`, `b87ad00` |
 | **diallosidymohamed** | Séance 3 : le moteur de recommandation, c'est-à-dire le pipeline complet | `43c1229` |
+
+**Les tests du moteur ont été écrits à deux, par Brad et Robin.** C'était le
+morceau le plus délicat à vérifier : il fallait construire un jeu d'essai dont
+les scores étaient calculables à la main, et surtout trouver des cas qui
+échouent si le code est cassé. Travailler en binôme a permis de confronter deux
+lectures de l'algorithme, et c'est de là qu'est venue l'idée du cas de contraste
+sur le cold start.
 
 Le découpage en couches a rendu ce travail en parallèle possible. Comme la
 couche `calcul` ne dépend de rien d'autre que du modèle, elle a pu être écrite
