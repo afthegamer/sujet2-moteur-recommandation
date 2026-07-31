@@ -52,7 +52,7 @@ src/main/scala/techmarket/
 ├── modele/          Item, User, Interaction, Recommandation, Catalogue
 ├── calcul/          Similarite (cosinus), Scores (poids, profils, popularité)
 ├── orchestration/   MoteurRecommandation (le pipeline)
-├── io/              ChargeurCsv (lecture des CSV), Affichage (sortie console)
+├── io/              ChargeurCsv (lecture), Affichage (console), ExportJson (export)
 └── Main.scala       point d'entrée
 ```
 
@@ -171,7 +171,30 @@ Ce qu'on lit : l'utilisateur 2, qui est nouveau, reçoit les valeurs sûres du
 catalogue. Les deux autres reçoivent des accessoires complémentaires, portés par
 des gens qui ont les mêmes goûts qu'eux. Chaque ligne dit pourquoi elle est là.
 
-**Tests : 46, tous verts** (`sbt test`).
+En plus de l'affichage console, `sbt run` écrit un fichier `recommandations.json`
+directement exploitable par une équipe front-end :
+
+```json
+{
+  "recommandations": [
+    {
+      "userId": 2,
+      "segment": "nouveau",
+      "suggestions": [
+        { "itemId": 4, "nom": "Laptop UltraBook 14", "categorie": "Ordinateurs portables",
+          "prixEur": 1099.00, "score": 28.00,
+          "justification": "Produit parmi les plus populaires du catalogue (historique insuffisant pour personnaliser)" }
+      ]
+    }
+  ]
+}
+```
+
+Les nombres y sont écrits avec un point décimal quelle que soit la langue du
+poste : une virgule produirait un JSON invalide. Les guillemets et antislashs
+présents dans un nom de produit sont échappés.
+
+**Tests : 53, tous verts** (`sbt test`).
 
 ## 7. Les difficultés rencontrées
 
@@ -240,7 +263,7 @@ affichée : il n'y a que deux notes en dessous de 3. Mais c'est la première cho
 Pour 20 profils hors-ligne, c'est sans importance. Au-delà, il faudrait
 pré-calculer les voisinages.
 
-**Les extensions optionnelles n'ont pas été faites.** Le sujet propose un
-scoring hybride, une mesure de précision, un export JSON et un indicateur
-d'impact. Nous avons préféré livrer exactement ce qui était demandé, avec des
-tests solides, plutôt que d'ajouter des fonctionnalités moins maîtrisées.
+**Les autres extensions n'ont pas été faites.** Le sujet propose aussi un
+scoring hybride, une mesure de précision et un indicateur d'impact. Nous avons
+préféré livrer ce qui était demandé, avec des tests solides, plutôt que
+d'ajouter des fonctionnalités moins maîtrisées.

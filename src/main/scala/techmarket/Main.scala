@@ -1,11 +1,12 @@
 package techmarket
 
-import techmarket.io.{Affichage, ChargeurCsv}
+import techmarket.io.{Affichage, ChargeurCsv, ExportJson}
 import techmarket.modele.*
 import techmarket.orchestration.MoteurRecommandation
 
 @main def main(): Unit =
   val topN = 3
+  val fichierExport = "recommandations.json"
 
   ChargeurCsv.chargerCatalogue("data") match
     case Left(erreur) =>
@@ -18,9 +19,14 @@ import techmarket.orchestration.MoteurRecommandation
       val echantillon = Segment.values.toList.flatMap: segment =>
         catalogue.users.filter(_.segment == segment).sortBy(_.id).headOption
 
-      echantillon.foreach: utilisateur =>
+      val resultats = echantillon.map: utilisateur =>
+        (utilisateur, MoteurRecommandation.recommander(catalogue, utilisateur.id, topN).getOrElse(Nil))
+
+      resultats.foreach: (utilisateur, recommandations) =>
         println()
-        MoteurRecommandation.recommander(catalogue, utilisateur.id, topN) match
-          case Left(erreur) => println(s"  $erreur")
-          case Right(recommandations) =>
-            println(Affichage.formaterRecommandations(utilisateur, recommandations))
+        println(Affichage.formaterRecommandations(utilisateur, recommandations))
+
+      println()
+      ExportJson.ecrire(fichierExport, resultats) match
+        case Left(erreur)  => println(erreur)
+        case Right(chemin) => println(s"=== Export JSON écrit dans $chemin ===")

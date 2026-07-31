@@ -53,6 +53,9 @@ sbt run
 sbt test
 ```
 
+`sbt run` affiche les recommandations et écrit un fichier `recommandations.json`
+à la racine du projet.
+
 ## Prérequis
 
 | Outil | Version |

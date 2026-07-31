@@ -20,3 +20,6 @@ out/
 *.log
 .DS_Store
 Thumbs.db
+
+# Export genere par sbt run
+recommandations.json
