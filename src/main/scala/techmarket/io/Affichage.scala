@@ -4,16 +4,8 @@ import techmarket.modele.*
 
 import java.util.Locale
 
-/** Mise en forme des résultats pour la console.
-  *
-  * Isolée du moteur : changer la présentation ne touche pas au calcul.
-  */
 object Affichage:
 
-  /** Formatage indépendant de la configuration régionale du poste, pour que la
-    * sortie reste identique d'une machine à l'autre — le sujet exige des
-    * résultats reproductibles.
-    */
   private def nombre(valeur: Double): String =
     String.format(Locale.ROOT, "%.2f", valeur)
 
